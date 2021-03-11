@@ -26,7 +26,7 @@ public class Modelo {
 	 * Atributos del modelo del mundo
 	 */
 	private ArregloDinamico<YoutubeVideo> datos;
-	
+
 	private ArregloDinamico<CategoriaVideo> Arreglocateg;
 	private YoutubeVideo youtube;
 
@@ -61,7 +61,7 @@ public class Modelo {
 				int codigoVideo = Integer.parseInt(palabra2[0]);
 				String nameCodigo = palabra2[1];
 				nameCodigo = nameCodigo.trim();
-				
+
 				CategoriaVideo catego = new CategoriaVideo(codigoVideo, nameCodigo);
 				Arreglocateg.addLast(catego);
 			}
@@ -75,7 +75,7 @@ public class Modelo {
 
 			String[] palabra=csvReader.readNext();
 			palabra =csvReader.readNext();
-			
+
 			while (palabra !=null )
 			{	
 				try {
@@ -102,17 +102,17 @@ public class Modelo {
 
 					int numeroV = Integer.parseInt(palabra[7]);
 					int numeroL = Integer.parseInt(palabra[8]);
-					
+
 					int numeroD = Integer.parseInt(palabra[9]);
 					String diez = palabra[16];
 					String once = "";
-					
+
 					for (int i = 0; i < Arreglocateg.size(); i++)
 					{
 						CategoriaVideo cat = Arreglocateg.firtsElement();
 						once = cat.darNombreCateg(catego);
 					}
-					
+
 					/*/
 					while (encontro != true)
 					{
@@ -146,7 +146,7 @@ public class Modelo {
 				}
 			}
 			csvReader.close();
-			
+
 
 		} 
 		catch (FileNotFoundException e)
@@ -232,7 +232,30 @@ public class Modelo {
 			}
 		}
 		return arreglo4;
-
 	}
 
-}
+	public YoutubeVideo darMasTendencia(ArregloDinamico<YoutubeVideo> arreglo)
+	{
+		int mayor = 0;
+		int cont = 0;
+		YoutubeVideo res = null;
+		for (int i = 0; i < arreglo.size(); i++)
+		{
+			for (int j = i+1; j < arreglo.size(); j++)
+			{
+				res = arreglo.firtsElement();
+				if(res.equals(arreglo.darElemento(j)))
+				{
+					cont ++;
+				}
+				if(cont > mayor)
+				{
+					mayor = cont;
+					res = arreglo.darElemento(i);
+				}
+			}
+		}
+			return res;
+		}
+
+	}

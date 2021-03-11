@@ -69,24 +69,30 @@ public class Controller
 				
 				view.printMessage("--------- Escriba el nombre del pais elegido ---------");
 				String Pais = lector.next();
-				ArregloDinamico <YoutubeVideo> arreglo = modelo.requerimiento2(Pais);
+				ArregloDinamico <YoutubeVideo> arreglo2 = modelo.requerimiento2(Pais);
 				
-				YoutubeVideo video = null;
-				for (int i =0; i < arreglo.size(); i ++)
-				{
-					// video = arreglo.firtsElement().getTrendingDate().getTime()<;
-				}
-				
+				YoutubeVideo video = modelo.darMasTendencia(arreglo2);
 				
 				view.printMessage("");
 				view.printMessage("Se ha completado con exito el proceso estos son los resultados");
 				view.printMessage("");
 				
-				System.out.println("Titulo del Video" + video.getTitulo() + "Fecha Trending" + video.getTrendingDate() + "Titulo Canal" + video.getTituloCanal() + "Fecha de Publicacion" + video.getPublishingTime() + "Numero de Views" + video.getNumeroViews() + "Numero de Likes" + video.getNumeroLikes()  + "Numero de Dislikes" + video.getNumeroDislikes());
+				System.out.println("Titulo del Video" + video.getTitulo() + "Titulo Canal" + video.getTituloCanal() + "En el pais" + video.getPais() );
 
 
 			case 4:
+				view.printMessage("--------- Escriba el nombre de la categoria elegida ---------");
+				String ca = lector.next();
+				ArregloDinamico <YoutubeVideo> arreglo3 = modelo.requerimiento3(ca);
 				
+				YoutubeVideo video2 = modelo.darMasTendencia(arreglo3);
+				
+				view.printMessage("");
+				view.printMessage("Se ha completado con exito el proceso estos son los resultados");
+				view.printMessage("");
+	
+				System.out.println("Titulo del Video" + video2.getTitulo() + "Titulo Canal" + video2.getTituloCanal() + "Identificador categoria" + video2.getCategoriaId() );
+
 				
 			break;
 				
