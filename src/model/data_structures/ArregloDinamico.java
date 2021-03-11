@@ -61,11 +61,10 @@ public class ArregloDinamico <T extends Comparable <T>>  implements ILista <T>, 
 		public T darElemento(int i) {
 			// TODO implementar
 			T element = null;
-			if (i>0 && i< tamanoAct)
+			if (i > 0 && i < tamanoAct)
 			{
-				element = (T) elementos[i];
+				element = elementos[i];
 			}
-			
 			return element;
 		}
 

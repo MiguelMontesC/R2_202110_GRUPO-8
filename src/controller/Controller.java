@@ -17,7 +17,7 @@ public class Controller
 	/* Instancia de la Vista*/
 	private View view;
 	
-	private Ordenamiento ordenamiento;
+	private Ordenamiento<YoutubeVideo> ordenamiento;
 
 	/**
 	 * Crear la vista y el modelo del proyecto
@@ -40,22 +40,29 @@ public class Controller
 			int option = lector.nextInt();
 			switch(option) {					
 			case 1:
-				view.printMessage("--------- Cargar YoutubeVideo en Arreglo Dinamico ");
+				view.printMessage("--------- Cargar YoutubeVideo en Arreglo Dinamico ---------");
 				modelo.cargarDatosArregloDinamico();
 				view.printMessage("Se ha cargado con Exito en el Arreglo Dinamico");
 				break;
 				
 
 			case 2:
+				
 				view.printMessage("--------- Escriba el nombre de la categoria elegida ---------");
 				String nombreC = lector.next();
+				lector.nextLine();
+				
 				view.printMessage("--------- Escriba el nombre del pais elegido ---------");
 				String pais = lector.next();
+				lector.nextLine();
+				
 				ArregloDinamico <YoutubeVideo> arre = modelo.requerimiento1(nombreC, pais);
 				view.printMessage("--------- Escriba el numero de videos que quiere ver en Arreglo Dinamico ---------");
 				int num = lector.nextInt();
-				ArregloDinamico <YoutubeVideo> sublista = (ArregloDinamico<YoutubeVideo>) modelo.cargar_NUMERO_DatosEnArregloDinamico(num,arre);
-				ordenamiento.ordenarSeleccion(sublista, new YoutubeVideo.ComparadorXViews(), true);
+				
+				ArregloDinamico <YoutubeVideo> sublista = modelo.cargar_NUMERO_DatosEnArregloDinamico(num,arre);
+				
+				ordenamiento.ordenarInsercion(sublista, new YoutubeVideo.ComparadorXViews(), true);
 				view.printMessage("");
 				view.printMessage("Se ha completado con exito el proceso estos son los resultados");
 				view.printMessage("");
@@ -69,6 +76,8 @@ public class Controller
 				
 				view.printMessage("--------- Escriba el nombre del pais elegido ---------");
 				String Pais = lector.next();
+				lector.nextLine();
+
 				ArregloDinamico <YoutubeVideo> arreglo2 = modelo.requerimiento2(Pais);
 				
 				YoutubeVideo video = modelo.darMasTendencia(arreglo2);
@@ -83,6 +92,8 @@ public class Controller
 			case 4:
 				view.printMessage("--------- Escriba el nombre de la categoria elegida ---------");
 				String ca = lector.next();
+				lector.nextLine();
+
 				ArregloDinamico <YoutubeVideo> arreglo3 = modelo.requerimiento3(ca);
 				
 				YoutubeVideo video2 = modelo.darMasTendencia(arreglo3);
@@ -99,15 +110,21 @@ public class Controller
 			case 5:
 				view.printMessage("--------- Escriba el nombre de la categoria elegida ---------");
 				String PAIS = lector.next();
+				lector.nextLine();
+
 				view.printMessage("--------- Escriba el tag elegido ---------");
 				String TAG = lector.next();
+				lector.nextLine();
+
 				ArregloDinamico <YoutubeVideo> arreg = modelo.requerimiento4(PAIS, TAG);
 			
 				view.printMessage("--------- Escriba el numero de videos que quiere ver en Arreglo Dinamico ---------");
 				int numer = lector.nextInt();
+				lector.nextLine();
+
 				ArregloDinamico <YoutubeVideo> sublistaaa = (ArregloDinamico<YoutubeVideo>) modelo.cargar_NUMERO_DatosEnArregloDinamico(numer,arreg);
 				
-				ordenamiento.ordenarSeleccion(sublistaaa, new YoutubeVideo.ComparadorXLikes(), true);
+				ordenamiento.ordenarInsercion(sublistaaa, new YoutubeVideo.ComparadorXLikes(), true);
 				view.printMessage("");
 				view.printMessage("Se ha completado con exito el proceso estos son los resultados");
 				view.printMessage("");

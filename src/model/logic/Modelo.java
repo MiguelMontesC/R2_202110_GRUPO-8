@@ -35,6 +35,7 @@ public class Modelo {
 	 */
 	public Modelo() {
 		datos = new ArregloDinamico<YoutubeVideo>(100000000);
+		Arreglocateg = new ArregloDinamico<CategoriaVideo>(1000);
 	}
 
 	public void cargarDatosArregloDinamico() throws ParseException 
@@ -48,7 +49,7 @@ public class Modelo {
 		{
 			//lectura de categoria
 			arhcCVS2= new FileReader("data/category-id.csv");
-			com.opencsv.CSVParser conPuntoYComa2 = new CSVParserBuilder().withSeparator(',').build();
+			com.opencsv.CSVParser conPuntoYComa2 = new CSVParserBuilder().withSeparator('\t').build();
 			csvReader2 = new CSVReaderBuilder(arhcCVS2).withCSVParser(conPuntoYComa2).build();
 
 
@@ -62,13 +63,14 @@ public class Modelo {
 				String nameCodigo = palabra2[1];
 				nameCodigo = nameCodigo.trim();
 
-				CategoriaVideo catego = new CategoriaVideo(codigoVideo, nameCodigo);
+				CategoriaVideo catego = new CategoriaVideo(codigoVideo, nameCodigo);				
 				Arreglocateg.addLast(catego);
+				palabra2 = csvReader2.readNext();
 			}
 			csvReader2.close();
 
 			// lectura de videos
-			arhcCVS= new FileReader("data/videos-all.csv");
+			arhcCVS= new FileReader("data/videos-small.csv");
 			com.opencsv.CSVParser conPuntoYComa = new CSVParserBuilder().withSeparator(',').build();
 			csvReader =new CSVReaderBuilder(arhcCVS).withCSVParser(conPuntoYComa).build();
 
@@ -112,21 +114,9 @@ public class Modelo {
 						CategoriaVideo cat = Arreglocateg.firtsElement();
 						once = cat.darNombreCateg(catego);
 					}
-
-					/*/
-					while (encontro != true)
-					{
-						if (catego == numeroCat)
-						{
-							encontro = true;
-							diez = palabra2 [1];
-							palabra2= csvReader2.readNext();
-						}
-					}
-/*/
 					youtube = new YoutubeVideo (id,trendingDate,  titulo, tituloCanal,catego,publishingTime , ttt, numeroV, numeroL, numeroD, diez, once);
 					datos.addLast(youtube);
-					System.out.println(youtube.getId());
+					//System.out.println(datos.size());
 				}
 				catch (Exception e)
 				{
@@ -146,8 +136,6 @@ public class Modelo {
 				}
 			}
 			csvReader.close();
-
-
 		} 
 		catch (FileNotFoundException e)
 		{
@@ -161,12 +149,12 @@ public class Modelo {
 		System.out.println("El tamaño de el arreglo es" + datos.size());
 	}
 
-	public ILista cargar_NUMERO_DatosEnArregloDinamico(int num, ILista lista) 
+	public ArregloDinamico<YoutubeVideo> cargar_NUMERO_DatosEnArregloDinamico(int num, ArregloDinamico <YoutubeVideo> lista) 
 	{
 		if (num > lista.size())
 			num = lista.size();
 		{
-			return lista.subLista(num);
+			return (ArregloDinamico<YoutubeVideo>) lista.subLista(num);
 		}
 	}
 
@@ -189,10 +177,10 @@ public class Modelo {
 		ArregloDinamico <YoutubeVideo> arreglo2 = new ArregloDinamico<YoutubeVideo> (100000);
 		for (int i = 0; i < datos.size(); i++)
 		{
-			YoutubeVideo yyyvvv = datos.firtsElement();
-			if (yyyvvv.getPais() == Pais)
+			YoutubeVideo yyyvvv = datos.darElemento(i);
+			if (yyyvvv.getPais().equals(Pais))
 			{
-				datos.agregar(yyyvvv);;
+				arreglo2.agregar(yyyvvv);;
 			}
 		}
 		return arreglo2;
@@ -204,10 +192,10 @@ public class Modelo {
 		ArregloDinamico <YoutubeVideo> arreglo3 = new ArregloDinamico<YoutubeVideo> (100000);
 		for (int i = 0; i < datos.size(); i++)
 		{
-			YoutubeVideo yyyvvv = datos.firtsElement();
-			if (yyyvvv.getNombreCategoria() == catNombre)
+			YoutubeVideo yyyvvv = datos.darElemento(i);
+			if (yyyvvv.getNombreCategoria().equals(catNombre))
 			{
-				datos.agregar(yyyvvv);;
+				arreglo3.agregar(yyyvvv);;
 			}
 		}
 		return arreglo3;
@@ -219,15 +207,15 @@ public class Modelo {
 		ArregloDinamico <YoutubeVideo> arreglo4 = new ArregloDinamico<YoutubeVideo> (100000);
 		for (int i = 0; i < datos.size(); i++)
 		{
-			YoutubeVideo yyyvvv = datos.firtsElement();
+			YoutubeVideo yyyvvv = datos.darElemento(i);
 			ArregloDinamico <String> tags = yyyvvv.getTags();
 			for (int j= 0; j < tags.size(); j++)
 			{
-				String tagA = tags.firtsElement();
+				String tagA = tags.darElemento(j);
 
 				if (yyyvvv.getPais() == Pais && tagA == tag)
 				{
-					datos.agregar(yyyvvv);;
+					arreglo4.agregar(yyyvvv);;
 				}
 			}
 		}
@@ -238,13 +226,13 @@ public class Modelo {
 	{
 		int mayor = 0;
 		int cont = 0;
-		YoutubeVideo res = null;
+		YoutubeVideo res = arreglo.firtsElement();
 		for (int i = 0; i < arreglo.size(); i++)
 		{
 			for (int j = i+1; j < arreglo.size(); j++)
 			{
-				res = arreglo.firtsElement();
-				if(res.equals(arreglo.darElemento(j)))
+				res = arreglo.darElemento(i);
+				if(res.getTitulo().equals(arreglo.darElemento(j).getTitulo()))
 				{
 					cont ++;
 				}

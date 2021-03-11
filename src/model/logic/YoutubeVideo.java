@@ -88,7 +88,6 @@ public class YoutubeVideo implements Comparable<YoutubeVideo> {
 		numeroViews = numeroV;
 		numeroLikes = numeroL;
 		numeroDislikes = numeroD;
-		
 		nombreCategoria = nombreCat;
 		pais = Pai;
 		
@@ -143,11 +142,11 @@ public class YoutubeVideo implements Comparable<YoutubeVideo> {
 		this.publishingTime = publishingTime;
 	}
 
-	public ArregloDinamico getTags() {
+	public ArregloDinamico <String> getTags() {
 		return tags;
 	}
 
-	public void setTags(ArregloDinamico tags) {
+	public void setTags(ArregloDinamico<String> tags) {
 		this.tags = tags;
 	}
 
