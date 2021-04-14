@@ -1,6 +1,7 @@
 package model.data_structures;
 
 public interface ITablaSimbolos <K extends Comparable<K>,V>  {
+	// Solucionar errres
 	
     void put(K key,V value) ;
 	
